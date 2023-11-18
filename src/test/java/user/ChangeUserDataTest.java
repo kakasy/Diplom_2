@@ -251,6 +251,8 @@ public class ChangeUserDataTest {
     }
 
     @After
+    @DisplayName("Удаление пользователя")
+    @Description("Удаление пользователя с созданными рандомными данными")
     public void tearDown() {
         given().log().all()
                 .header("Content-Type", "application/json")

@@ -173,6 +173,8 @@ public class CreateOrderTest {
     }
 
     @After
+    @DisplayName("Удаление пользователя")
+    @Description("Удаление пользователя с созданными рандомными данными")
     public void tearDown() {
         given()
                 .log().all()
