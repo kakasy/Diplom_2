@@ -9,9 +9,14 @@ public class Ingredient {
     private int carbohydrates;
     private int calories;
     private int price;
+    private String image;
+    private String image_mobile;
+    private String image_large;
+    private int __v;
 
-    public Ingredient(String _id, String name, String type, int proteins, int fat,
-                      int carbohydrates, int calories, int price) {
+    public Ingredient(String _id, String name, String type, int proteins,
+                      int fat, int carbohydrates, int calories, int price,
+                      String image, String image_mobile, String image_large, int __v) {
         this._id = _id;
         this.name = name;
         this.type = type;
@@ -20,6 +25,10 @@ public class Ingredient {
         this.carbohydrates = carbohydrates;
         this.calories = calories;
         this.price = price;
+        this.image = image;
+        this.image_mobile = image_mobile;
+        this.image_large = image_large;
+        this.__v = __v;
     }
 
     public String get_id() {
@@ -84,5 +93,37 @@ public class Ingredient {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage_mobile() {
+        return image_mobile;
+    }
+
+    public void setImage_mobile(String image_mobile) {
+        this.image_mobile = image_mobile;
+    }
+
+    public String getImage_large() {
+        return image_large;
+    }
+
+    public void setImage_large(String image_large) {
+        this.image_large = image_large;
+    }
+
+    public int get__v() {
+        return __v;
+    }
+
+    public void set__v(int __v) {
+        this.__v = __v;
     }
 }
