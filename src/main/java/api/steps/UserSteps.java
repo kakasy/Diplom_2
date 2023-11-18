@@ -60,7 +60,7 @@ public class UserSteps {
                 .statusCode(HttpStatus.SC_UNAUTHORIZED);
     }
 
-    @Step("Изменение данных пользователя с авторизацией. PATCH-запрос на эндпоинт /api/auth/user")
+    @Step("Изменение данных авторизованного пользователя. PATCH-запрос на эндпоинт /api/auth/user")
     public Response sendPatchRequestWithAuthorizationApiAuthUser(User user, String token) {
         return given()
                 .log().all()
@@ -71,7 +71,7 @@ public class UserSteps {
                 .patch("/api/auth/user");
     }
 
-    @Step("Изменение данных пользователя без авторизации. PATCH-запрос на эндпоинт /api/auth/user")
+    @Step("Изменение данных не авторизованного пользователя. PATCH-запрос на эндпоинт /api/auth/user")
     public Response sendPatchRequestWithoutAuthorizationApiAuthUser(User user) {
         return given()
                 .log().all()
