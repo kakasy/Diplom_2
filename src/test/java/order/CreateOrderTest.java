@@ -20,7 +20,6 @@ import org.junit.After;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 
 public class CreateOrderTest {
     private String name;
@@ -176,10 +175,7 @@ public class CreateOrderTest {
     @DisplayName("Удаление пользователя")
     @Description("Удаление пользователя с созданными рандомными данными")
     public void tearDown() {
-        given()
-                .log().all()
-                .header("Content-Type", "application/json")
-                .body(user)
-                .delete("/api/auth/user");
+
+        UserSteps.deleteUser(user);
     }
 }

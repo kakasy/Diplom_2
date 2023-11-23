@@ -12,7 +12,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
 
 public class ChangeUserDataTest {
     private String name;
@@ -254,9 +253,7 @@ public class ChangeUserDataTest {
     @DisplayName("Удаление пользователя")
     @Description("Удаление пользователя с созданными рандомными данными")
     public void tearDown() {
-        given().log().all()
-                .header("Content-Type", "application/json")
-                .body(user)
-                .delete("/api/auth/user");
+
+        UserSteps.deleteUser(user);
     }
 }

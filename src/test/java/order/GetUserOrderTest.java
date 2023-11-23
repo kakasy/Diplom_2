@@ -90,10 +90,7 @@ public class GetUserOrderTest {
     @DisplayName("Удаление пользователя")
     @Description("Удаление пользователя с созданными рандомными данными")
     public void tearDown() {
-        given()
-                .log().all()
-                .header("Content-Type", "application/json")
-                .body(user)
-                .delete("/api/auth/user");
+
+        UserSteps.deleteUser(user);
     }
 }
