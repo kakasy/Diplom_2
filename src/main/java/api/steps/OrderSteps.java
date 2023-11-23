@@ -12,15 +12,15 @@ import org.hamcrest.Matchers;
 
 import static io.restassured.RestAssured.given;
 
-public class OrderSteps {
+public class OrderSteps extends BaseClient {
 
     @Step("Получить ингредиенты. GET-запрос на эндпоинт /api/ingredients")
     public ValidatableResponse getIngredients() {
 
         return given()
-                .header("Content-Type", "application/json")
+                .spec(getSpec())
                 .when()
-                .get("/api/ingredients")
+                .get(API_INGREDIENTS)
                 .then();
 
     }
@@ -35,7 +35,7 @@ public class OrderSteps {
                 .header("authorization", token)
                 .body(order)
                 .when()
-                .post("/api/orders");
+                .post(API_ORDERS);
     }
 
     @Step("Создать заказ без авторизации. POST-запрос на эндпоинт /api/orders")
@@ -47,7 +47,7 @@ public class OrderSteps {
                 .header("Content-Type", "application/json")
                 .body(order)
                 .when()
-                .post("/api/orders");
+                .post(API_ORDERS);
     }
 
     @Step("Сервер отвечает на создание заказа без ингредиентов кодом 400")

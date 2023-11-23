@@ -2,12 +2,13 @@ package api.steps;
 
 import api.model.User;
 import io.qameta.allure.Step;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 
 import static io.restassured.RestAssured.given;
-public class UserSteps {
+public class UserSteps extends BaseClient {
 
     private final static String ERROR_MESSAGE_REGISTER = "Email, password and name are required fields";
     private final static String ERROR_MESSAGE_LOGIN = "email or password are incorrect";
@@ -18,11 +19,10 @@ public class UserSteps {
     public Response sendPostRequestApiAuthRegister(User user) {
 
         return given()
-                .log().all()
-                .header("Content-type", "application/json")
+                .spec(getSpec())
                 .body(user)
                 .when()
-                .post("/api/auth/register");
+                .post(API_AUTH_REGISTER);
     }
 
     @Step("Ответ сервера на попытку регистрации пользователя кодом 403")
@@ -41,11 +41,10 @@ public class UserSteps {
     @Step("Авторизация пользователя. POST-запрос на эндпоинт /api/auth/login")
     public Response sendPostRequestApiAuthLogin(User user) {
         return given()
-                .log().all()
-                .header("Content-type", "application/json")
+                .spec(getSpec())
                 .body(user)
                 .when()
-                .post("/api/auth/login");
+                .post(API_AUTH_LOGIN);
     }
 
     @Step("Ответ сервера на попытку авторизации пользователя кодом 401")
@@ -63,22 +62,20 @@ public class UserSteps {
     @Step("Изменение данных авторизованного пользователя. PATCH-запрос на эндпоинт /api/auth/user")
     public Response sendPatchRequestWithAuthorizationApiAuthUser(User user, String token) {
         return given()
-                .log().all()
-                .header("Content-Type", "application/json")
+                .spec(getSpec())
                 .header("authorization", token)
                 .body(user)
                 .when()
-                .patch("/api/auth/user");
+                .patch(API_AUTH_USER);
     }
 
     @Step("Изменение данных не авторизованного пользователя. PATCH-запрос на эндпоинт /api/auth/user")
     public Response sendPatchRequestWithoutAuthorizationApiAuthUser(User user) {
         return given()
-                .log().all()
-                .header("Content-Type", "application/json")
+                .spec(getSpec())
                 .body(user)
                 .when()
-                .patch("/api/auth/user");
+                .patch(API_AUTH_USER);
     }
 
     @Step("Ответ сервера на изменение данных пользователя кодом 200")
@@ -105,5 +102,13 @@ public class UserSteps {
                 .body("message", Matchers.is(ERROR_MESSAGE_USER))
                 .and()
                 .statusCode(HttpStatus.SC_UNAUTHORIZED);
+    }
+
+    @Step("Удаление пользователя")
+    public static Response deleteUser(User user) {
+        return given()
+                .spec(getSpec())
+                .body(user)
+                .delete(DELETE_USER);
     }
 }
