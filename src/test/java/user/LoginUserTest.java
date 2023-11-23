@@ -13,8 +13,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.given;
-
 public class LoginUserTest {
     private String email;
     private String password;
@@ -44,6 +42,8 @@ public class LoginUserTest {
         Response response = userSteps.sendPostRequestApiAuthLogin(user);
         response.then()
                 .assertThat()
+                .statusCode(HttpStatus.SC_OK)
+                .and()
                 .body("success", Matchers.is(true))
                 .and()
                 .body("accessToken", Matchers.notNullValue())
@@ -52,9 +52,7 @@ public class LoginUserTest {
                 .and()
                 .body("user.email", Matchers.is(user.getEmail().toLowerCase()))
                 .and()
-                .body("user.name", Matchers.is(name))
-                .and()
-                .statusCode(HttpStatus.SC_OK);
+                .body("user.name", Matchers.is(name));
     }
 
     @Test
@@ -113,9 +111,7 @@ public class LoginUserTest {
     @DisplayName("Удаление пользователя")
     @Description("Удаление пользователя с созданными рандомными данными")
     public void tearDown() {
-        given().log().all()
-                .header("Content-Type", "application/json")
-                .body(user)
-                .delete("/api/auth/user");
+
+        UserSteps.deleteUser(user);
     }
 }
